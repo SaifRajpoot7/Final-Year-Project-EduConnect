@@ -16,6 +16,7 @@ import lectureController from './controllers/lecture.controller.js';
 import superAdminRouter from './routes/superAdmin.routes.js';
 import feedbackRouter from './routes/feedback.routes.js';
 import discussionRouter from './routes/discussion.router.js';
+import transporter from './config/nodeMailerConfig.js';
 
 
 const app = express();
@@ -68,6 +69,15 @@ app.use("/api/generate-stream-token", requireAuth, generateToken);
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("SMTP Error:", error);
+  } else {
+    console.log("SMTP server ready to send emails");
+  }
+});
+
 
 
 export default app;

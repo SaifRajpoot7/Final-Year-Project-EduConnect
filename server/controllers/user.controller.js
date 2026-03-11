@@ -94,7 +94,7 @@ const registerUser = async (req, res) => {
       body: accountVerificationEmailTemplate({
         name: user.fullName,
         otp: otp,
-        url: `${process.env.CLIENT_URL}/verify-account`,
+        url: `${process.env.CLIENT_URL}/account-verification`,
       }),
     };
 
@@ -270,7 +270,7 @@ const generateVerificationOtp = async (req, res) => {
       body: accountVerificationEmailTemplate({
         name: user.fullName,
         otp: otp,
-        url: `${process.env.CLIENT_URL}/verify-account`,
+        url: `${process.env.CLIENT_URL}/account-verification`,
       }),
     };
 
@@ -312,7 +312,7 @@ const verifyAccount = async (req, res) => {
       subject: "Welcome to EduConnect | A Virtual Learning Platform",
       body: accountConfirmationWelcomeEmailTemplate({
         name: user.fullName,
-        url: `${process.env.CLIENT_URL}/verify-account`,
+        url: `${process.env.CLIENT_URL}/dashboard`,
       }),
     };
 

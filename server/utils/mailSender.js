@@ -2,17 +2,19 @@
 import transporter from "../config/nodeMailerConfig.js";
 
 const buildMailOptions = (mailDetails) => ({
-  from: process.env.SMTP_USER,
+  from: `"EduConnect" <${process.env.SMTP_SENDER}>`,
   to: mailDetails.email,
   subject: mailDetails.subject,
-  html: typeof mailDetails.body === "function"
-    ? mailDetails.body({
+  html:
+    typeof mailDetails.body === "function"
+      ? mailDetails.body({
         name: mailDetails.name,
         email: mailDetails.email,
         url: mailDetails.url,
       })
-    : mailDetails.body,
+      : mailDetails.body,
 });
+
 
 const mailSender = async (mailDetails) => {
   try {
