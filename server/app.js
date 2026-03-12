@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 import connectToDb from './config/database.js';
 import userRouter from './routes/user.routes.js';
 import courseRouter from './routes/course.routes.js';
-import mailSender from './utils/mailSender.js';
 import assignmentRouter from './routes/assignment/assignment.route.js';
 import quizRouter from './routes/quiz.routes.js';
 import announcementRouter from './routes/announcement.routes.js';
@@ -16,7 +15,6 @@ import lectureController from './controllers/lecture.controller.js';
 import superAdminRouter from './routes/superAdmin.routes.js';
 import feedbackRouter from './routes/feedback.routes.js';
 import discussionRouter from './routes/discussion.router.js';
-import transporter from './config/nodeMailerConfig.js';
 
 const app = express();
 
