@@ -273,7 +273,6 @@ const generateVerificationOtp = async (req, res) => {
         url: `${process.env.CLIENT_URL}/account-verification`,
       }),
     };
-
     mailSender(mailDetails)
     res.status(200).json({ success: true, message: 'OTP Sent Successfully' });
   } catch (error) {

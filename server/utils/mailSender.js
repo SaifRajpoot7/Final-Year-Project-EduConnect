@@ -1,28 +1,33 @@
-// utils/mailSender.js
-import transporter from "../config/nodeMailerConfig.js";
+import { BrevoClient } from '@getbrevo/brevo';
 
-const buildMailOptions = (mailDetails) => ({
-  from: `"EduConnect" <${process.env.SMTP_SENDER}>`,
-  to: mailDetails.email,
-  subject: mailDetails.subject,
-  html:
-    typeof mailDetails.body === "function"
-      ? mailDetails.body({
-        name: mailDetails.name,
-        email: mailDetails.email,
-        url: mailDetails.url,
-      })
-      : mailDetails.body,
+// 1. Initialize the client using your API Key
+const client = new BrevoClient({
+  apiKey: process.env.BREVO_API_KEY,
 });
 
-
+/**
+ * @param {Object} mailDetails - contains { email, subject, body }
+ */
 const mailSender = async (mailDetails) => {
+  const { email, subject, body } = mailDetails;
+
   try {
-    const info = await transporter.sendMail(buildMailOptions(mailDetails));
-    // console.log(`✅ Email sent to ${mailDetails.email}: ${info.messageId}`);
-    return info;
+    // 2. In this version, we usually call sendTransacEmail directly from the client
+    const response = await client.transactionalEmails.sendTransacEmail({
+      subject: subject,
+      htmlContent: body,
+      sender: { 
+        name: "EduConnect", 
+        email: process.env.BREVO_SENDER
+      },
+      to: [{ email: String(email).trim() }],
+    });
+
+    // console.log("Brevo: Email sent successfully.");
+    return response;
   } catch (error) {
-    // console.error(`❌ Failed to send email to ${mailDetails.email}:`, error.message);
+    // This version uses 'BrevoError' internally
+    console.error("Brevo Error:", error.message);
     throw error;
   }
 };
